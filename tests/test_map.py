@@ -27,8 +27,7 @@ def test_map_basic(monkeypatch):
     mock_client.map.return_value = mock_result
 
     with patch("firecrawl_cli.commands.map.Firecrawl", return_value=mock_client):
-        # Note: When only one command exists, Typer doesn't use subcommand syntax
-        result = runner.invoke(app, ["https://example.com"])
+        result = runner.invoke(app, ["map", "https://example.com"])
 
     assert result.exit_code == 0
     assert "https://example.com/page1" in result.stdout
@@ -47,8 +46,7 @@ def test_map_with_limit(monkeypatch):
     mock_client.map.return_value = mock_result
 
     with patch("firecrawl_cli.commands.map.Firecrawl", return_value=mock_client):
-        # Note: When only one command exists, Typer doesn't use subcommand syntax
-        result = runner.invoke(app, ["https://example.com", "--limit", "50"])
+        result = runner.invoke(app, ["map", "https://example.com", "--limit", "50"])
 
     mock_client.map.assert_called_once_with(
         url="https://example.com",
@@ -69,8 +67,7 @@ def test_map_with_search(monkeypatch):
     mock_client.map.return_value = mock_result
 
     with patch("firecrawl_cli.commands.map.Firecrawl", return_value=mock_client):
-        # Note: When only one command exists, Typer doesn't use subcommand syntax
-        result = runner.invoke(app, ["https://example.com", "--search", "docs"])
+        result = runner.invoke(app, ["map", "https://example.com", "--search", "docs"])
 
     mock_client.map.assert_called_once_with(
         url="https://example.com",
