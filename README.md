@@ -42,8 +42,11 @@ firecrawl map https://example.com --search docs
 ### Scrape - Single page
 
 ```bash
-# Output to stdout
+# Output to stdout (fast by default, uses cache)
 firecrawl scrape https://example.com
+
+# Force fresh scrape (skip cache)
+firecrawl scrape https://example.com --refresh
 
 # Save to file
 firecrawl scrape https://example.com -o output.md

@@ -9,14 +9,21 @@ from firecrawl_cli.utils import get_api_key
 def scrape_command(
     url: str = typer.Argument(..., help="URL to scrape"),
     output: Optional[Path] = typer.Option(None, "-o", "--output", help="Output file path"),
+    refresh: bool = typer.Option(False, "--refresh", help="Force fresh scrape (skip cache)"),
 ):
-    """Scrape a single page to markdown."""
+    """Scrape a single page to markdown (fast by default, uses cache)."""
     try:
         api_key = get_api_key()
         firecrawl = Firecrawl(api_key=api_key)
 
-        # Scrape URL
-        doc = firecrawl.scrape(url, formats=["markdown"])
+        # Scrape URL with max_age parameter
+        # Default: uses cache (fast, up to 500% faster)
+        # --refresh: forces fresh scrape (max_age=0)
+        if refresh:
+            doc = firecrawl.scrape(url, formats=["markdown"], max_age=0)
+        else:
+            # Don't pass max_age to use API default (2 days cache)
+            doc = firecrawl.scrape(url, formats=["markdown"])
 
         markdown = doc.markdown
 
