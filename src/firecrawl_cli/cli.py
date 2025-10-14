@@ -2,12 +2,36 @@
 import typer
 from typing import Optional
 
+__version__ = "0.1.0"
+
+
+def version_callback(value: bool):
+    """Print version and exit."""
+    if value:
+        typer.echo(f"firecrawl version {__version__}")
+        raise typer.Exit()
+
 
 app = typer.Typer(
     name="firecrawl",
     help="CLI tool for Firecrawl API - map, scrape, crawl, and batch operations",
     no_args_is_help=True,
 )
+
+
+@app.callback()
+def main(
+    version: Optional[bool] = typer.Option(
+        None,
+        "--version",
+        "-v",
+        help="Show version and exit",
+        callback=version_callback,
+        is_eager=True,
+    )
+):
+    """CLI tool for Firecrawl API."""
+    pass
 
 
 # Register commands
