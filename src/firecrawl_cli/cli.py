@@ -14,10 +14,12 @@ app = typer.Typer(
 from firecrawl_cli.commands import map as map_cmd
 from firecrawl_cli.commands import scrape as scrape_cmd
 from firecrawl_cli.commands import crawl as crawl_cmd
+from firecrawl_cli.commands import batch as batch_cmd
 
 app.command(name="map")(map_cmd.map_command)
 app.command(name="scrape")(scrape_cmd.scrape_command)
 app.command(name="crawl")(crawl_cmd.crawl_command)
+app.command(name="batch")(batch_cmd.batch_command)
 
 
 if __name__ == "__main__":
